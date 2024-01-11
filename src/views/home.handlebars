@@ -1,0 +1,34 @@
+{{>menu}}
+<h1>Products</h1>
+
+<h1>{{#if usuario}}
+  Bienvenido a la Tienda, {{usuario.nombre}}!
+  {{else}}Bienvenido a la Tienda, Invitado!
+  {{/if}}
+</h1>
+
+{{#each products}}
+  <div class="product">
+    <img src="{{thumbnails.[0]}}" alt="{{title}}">
+    <h2>{{title}}</h2>
+    <p>{{description}}</p>
+    <p>Precio: {{price}}</p>
+    <p>Stock: {{stock}}</p>
+    <p>Categoría: {{category}}</p>
+    <button>Agregar al carrito</button>
+  </div>
+{{/each}}
+
+<br>
+
+<a href="/home?pagina=1{{#if currentCategory}}&category={{currentCategory}}{{/if}}">Pagina 1</a> 
+
+{{#if hasPrevPage}}
+  <a href="/home?pagina={{prevPage}}{{#if currentCategory}}&category={{currentCategory}}{{/if}}">Pagina Anterior</a>
+{{/if}}
+
+{{#if hasNextPage}}
+  <a href="/home?pagina={{nextPage}}{{#if currentCategory}}&category={{currentCategory}}{{/if}}">Pagina Siguiente</a>
+{{/if}}
+
+<a href="/home?pagina={{totalPages}}{{#if currentCategory}}&category={{currentCategory}}{{/if}}">Ultima Pagina</a>

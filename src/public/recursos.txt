@@ -1,0 +1,8 @@
+App ID: 794294
+
+Client ID: Iv1.fbe5e6fd3004c588
+
+contraseña secreta: 2c5119157bc2b281398a3edc7feef65c90682651
+
+
+http://localhost:3012/api/registro/callbackGithub
