@@ -4,7 +4,8 @@
         <ul>
             {{#each carts.items}}
                 <li>
-                    <img src="{{this.product.thumbnails}}" alt="{{this.products.title}}">
+                    {{!-- <img src="{{this.product.thumbnails}}" alt="{{this.products.title}}"> --}} 
+                    {{!-- cambiar que las url sean con http y ademas en el router agregar una validacion de http o que sea en formato img las fotos que se suban en el post --}}
                     <h2>{{this.product.title}}</h2>
                     <p>Descripción: {{this.product.description}}</p>
                     <p>Precio: {{this.product.price}}</p>
