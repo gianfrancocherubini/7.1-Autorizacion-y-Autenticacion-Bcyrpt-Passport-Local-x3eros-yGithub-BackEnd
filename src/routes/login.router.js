@@ -1,6 +1,4 @@
 import { Router } from 'express';
-import { UsuariosModelo } from '../dao/models/usuarios.model.js';
-import { validaPassword } from '../utils.js';
 import passport from 'passport';
 
 export const router=Router()

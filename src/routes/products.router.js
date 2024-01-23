@@ -1,7 +1,7 @@
 // http://localhost:3014/home para acceder a todos los productos
 // http://localhost:3014/home?category=computadoras para acceder a las computadoras
 // http://localhost:3014/home?category=celulares  para acceder a los celulares
-
+import validUrl from 'valid-url';
 import { Router } from 'express';
 import { ProductEsquema } from '../dao/models/products.model.js'
 
@@ -53,27 +53,32 @@ router.post('/', async (req, res) => {
         for (const field of requiredFields) {
             if (!newProductData[field]) {
                 res.setHeader('Content-Type', 'application/json');
-                res.status(400).json({ error: `El campo '${field}' es obligatorio.` });
-                return;
+                return res.status(400).json({ error: `El campo '${field}' es obligatorio.` });
             }
+        }
+
+        // Validar URLs de imágenes
+        const validThumbnails = newProductData.thumbnails.every(url => validUrl.isUri(url));
+
+        if (!validThumbnails) {
+            res.setHeader('Content-Type', 'application/json');
+            return res.status(400).json({ error: 'La URL de la imagen no es válida.' });
         }
 
         const existingProducts = await ProductEsquema.findOne({ code: newProductData.code });
        
         if (existingProducts) {
             res.setHeader('Content-Type', 'application/json');
-            res.status(400).json({ error: `Ya existe un producto con el código '${newProductData.code}'.` });
-            return;
+            return res.status(400).json({ error: `Ya existe un producto con el código '${newProductData.code}'.` });
         }
 
         await ProductEsquema.create(newProductData);
         res.setHeader('Content-Type', 'application/json');
-        res.status(201).json({ success: true, message: 'Producto agregado correctamente.', newProductData });
-        console.log('Producto agregado:', newProductData);
+        return res.status(201).json({ success: true, message: 'Producto agregado correctamente.', newProductData });
     } catch (error) {
         console.error(error);
         res.setHeader('Content-Type', 'application/json');
-        res.status(500).json({ error: 'Error al agregar el producto.' });
+        return res.status(500).json({ error: 'Error al agregar el producto.' });
     }
 });
 
