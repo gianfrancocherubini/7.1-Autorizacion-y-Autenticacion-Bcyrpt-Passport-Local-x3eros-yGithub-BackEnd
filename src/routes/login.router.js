@@ -39,11 +39,11 @@ router.get('/errorGithub',(req,res)=>{
 });
 
 // ESTRATEGIA DE AUTENTICACION LOCAL
-router.get('/errorLogin',(req,res)=>{
-    return res.redirect('/login?error=Error en el proceso de login... :(')
+router.get('/error',(req,res)=>{
+    return res.redirect('/api/login?error=Error en el proceso de login... :(')
 });
 
-router.post('/', passport.authenticate('login', {failureRedirect: '/api/login/errorLogin'}),  async (req, res) => {
+router.post('/', passport.authenticate('login', {failureRedirect: '/api/login/error'}),  async (req, res) => {
  
     console.log(req.user)
     req.session.usuario = {

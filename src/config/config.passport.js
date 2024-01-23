@@ -36,7 +36,8 @@ export const inicializarPassport=()=>{
 
                 if (email === 'adminCoder@coder.com') {
                     try {
-                        let usuario = await UsuariosModelo.create({ nombre, email, password, rol: 'administrador' });
+                        let hashedPassword = creaHash(password);
+                        let usuario = await UsuariosModelo.create({ nombre, email, password: hashedPassword, rol: 'administrador' });
                         return done(null, usuario)
                     } catch (error) {
                         return done(null, false)
